@@ -55,19 +55,19 @@ class GameTurnsController extends Controller
         return response()->json($turnsArray);
     }
 // To Get The Turns Number
-    private function getTurn($players, $startingPlayer)
-    {
-        $turn = [];
-        $alphabet = range('A', 'Z');
-        $startingPlayerIndex = array_search($startingPlayer, $alphabet);
-
-        for ($i = 0; $i < $players; $i++) {
-            $playerIndex = ($startingPlayerIndex + $i) % $players;
-            $turn[] = $alphabet[$playerIndex];
-        }
-
-        return $turn;
-    }
+//    private function getTurn($players, $startingPlayer)
+//    {
+//        $turn = [];
+//        $alphabet = range('A', 'Z');
+//        $startingPlayerIndex = array_search($startingPlayer, $alphabet);
+//
+//        for ($i = 0; $i < $players; $i++) {
+//            $playerIndex = ($startingPlayerIndex + $i) % $players;
+//            $turn[] = $alphabet[$playerIndex];
+//        }
+//
+//        return $turn;
+//    }
 //
 //    private function getNextPlayer($player)
 //    {
