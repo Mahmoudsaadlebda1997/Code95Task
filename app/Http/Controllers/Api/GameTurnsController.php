@@ -69,11 +69,11 @@ class GameTurnsController extends Controller
         return $turn;
     }
 //
-    private function getNextPlayer($player)
-    {
-        $alphabet = range('A', 'Z');
-        $playerIndex = array_search($player, $alphabet);
-        $nextPlayerIndex = ($playerIndex + 1) % count($alphabet);
-        return $alphabet[$nextPlayerIndex];
-    }
+//    private function getNextPlayer($player)
+//    {
+//        $alphabet = range('A', 'Z');
+//        $playerIndex = array_search($player, $alphabet);
+//        $nextPlayerIndex = ($playerIndex + 1) % count($alphabet);
+//        return $alphabet[$nextPlayerIndex];
+//    }
 }
