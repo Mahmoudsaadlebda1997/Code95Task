@@ -4,9 +4,24 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use SplQueue;
 
 class GameTurnsController extends Controller
 {
+//    public function getGameTurns(Request $request)
+//    {
+//        $players = $request->playersNumber;
+//        $turns = $request->turns;
+//        $startingPlayer = $request->startingPlayer;
+//
+//        $turnsArray = [];
+//        for ($i = 0; $i < $turns; $i++) {
+//            $turnsArray[] = $this->getTurn($players, $startingPlayer);
+//            $startingPlayer = $this->getNextPlayer($startingPlayer);
+//        }
+//
+//        return response()->json($turnsArray);
+//    }
     public function getGameTurns(Request $request)
     {
         $players = $request->playersNumber;
@@ -14,9 +29,27 @@ class GameTurnsController extends Controller
         $startingPlayer = $request->startingPlayer;
 
         $turnsArray = [];
+        $playersQueue = new SplQueue();
+
+        // Initialize the queue with players
+        for ($i = 0; $i < $players; $i++) {
+            $playersQueue->enqueue(chr(ord($startingPlayer) + $i));
+        }
+
         for ($i = 0; $i < $turns; $i++) {
-            $turnsArray[] = $this->getTurn($players, $startingPlayer);
-            $startingPlayer = $this->getNextPlayer($startingPlayer);
+            $turn = [];
+            $queueSize = $playersQueue->count();
+
+            for ($j = 0; $j < $queueSize; $j++) {
+                $player = $playersQueue->dequeue();
+                $turn[] = $player;
+                $playersQueue->enqueue($player);
+            }
+
+            $startingPlayer = $playersQueue->dequeue();
+            $playersQueue->enqueue($startingPlayer);
+
+            $turnsArray[] = $turn;
         }
 
         return response()->json($turnsArray);
